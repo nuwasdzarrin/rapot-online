@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2019 at 06:01 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Generation Time: Nov 03, 2019 at 06:33 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ta`
+-- Database: `raport`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +35,7 @@ CREATE TABLE `admin` (
   `alamat` varchar(100) NOT NULL,
   `jenis_kelamin` varchar(10) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -57,9 +59,9 @@ CREATE TABLE `aktif` (
   `id` int(11) NOT NULL,
   `semester` varchar(25) NOT NULL COMMENT 'ganjil genap',
   `periode` varchar(25) NOT NULL COMMENT '2019/2020',
-  `status` int(2) NOT NULL DEFAULT '0' COMMENT 'On Off',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(2) NOT NULL DEFAULT 0 COMMENT 'On Off',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -84,7 +86,7 @@ CREATE TABLE `ekstra` (
   `nama` varchar(100) NOT NULL,
   `semester` varchar(100) NOT NULL,
   `tahun_angkatan` char(10) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -113,7 +115,7 @@ CREATE TABLE `ekstra_siswa` (
   `aktif_id` int(2) DEFAULT NULL,
   `ekstra_id` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -221,7 +223,7 @@ CREATE TABLE `kkms` (
 --
 
 INSERT INTO `kkms` (`id`, `predA1`, `predA2`, `predB1`, `predB2`, `predC1`, `predC2`, `predD1`, `predD2`, `created_at`, `updated_at`) VALUES
-(1, 100, 90, 90, 80, 80, 75, 75, 0, NULL, '2019-10-24 01:15:44');
+(1, 100, 90, 90, 80, 80, 70, 70, 0, NULL, '2019-10-31 22:44:26');
 
 -- --------------------------------------------------------
 
@@ -237,7 +239,7 @@ CREATE TABLE `mapel` (
   `semester` varchar(45) NOT NULL,
   `tahun_angkatan` char(10) NOT NULL,
   `id_semester` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -278,7 +280,7 @@ CREATE TABLE `mapel_siswa` (
   `p_kd8` int(11) DEFAULT NULL,
   `p_kd9` int(11) DEFAULT NULL,
   `p_kd10` int(11) DEFAULT NULL,
-  `p_deskripsi` text,
+  `p_deskripsi` text DEFAULT NULL,
   `k_kd1` int(11) DEFAULT NULL,
   `k_kd2` int(11) DEFAULT NULL,
   `k_kd3` int(11) DEFAULT NULL,
@@ -289,8 +291,8 @@ CREATE TABLE `mapel_siswa` (
   `k_kd8` int(11) DEFAULT NULL,
   `k_kd9` int(11) DEFAULT NULL,
   `k_kd10` int(11) DEFAULT NULL,
-  `k_deskripsi` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `k_deskripsi` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -331,7 +333,10 @@ INSERT INTO `mapel_siswa` (`id`, `siswa_id`, `mapel_id`, `aktif_id`, `p_kd1`, `p
 (83, 22, 5, 1, 90, 0, 70, 0, 80, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, '2019-10-23 09:16:32', '2019-10-26 03:11:59'),
 (84, 21, 3, 1, 88, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-23 20:13:29', '2019-10-24 03:13:29'),
 (86, 3, 6, 1, 80, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-24 01:05:06', '2019-10-24 08:05:06'),
-(87, 11, 5, 1, 80, 90, 100, 70, 0, 0, 0, 0, 0, 0, 'bdg', 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 'hg', '2019-10-24 09:49:52', '2019-10-24 16:50:05');
+(87, 11, 5, 1, 80, 90, 100, 70, 0, 0, 0, 0, 65, 0, 'bdg', 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 'hg', '2019-10-24 09:49:52', '2019-11-01 04:06:08'),
+(88, 25, 1, 1, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 'Tingkatkan', 100, 20, 0, 0, 0, 0, 0, 0, 0, 0, NULL, '2019-10-30 18:46:38', '2019-10-31 01:46:38'),
+(89, 11, 2, 1, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 'Bagus', 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 'Tingkatkan', '2019-10-31 23:10:25', '2019-11-01 06:10:25'),
+(90, 11, 4, 1, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, '50', 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, '100', '2019-11-02 21:16:45', '2019-11-03 04:16:45');
 
 -- --------------------------------------------------------
 
@@ -369,7 +374,7 @@ CREATE TABLE `mulok` (
   `nama` varchar(100) NOT NULL,
   `semester` varchar(100) NOT NULL,
   `periode` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -398,14 +403,14 @@ CREATE TABLE `mulok_siswa` (
   `p_kd2` int(11) DEFAULT NULL,
   `p_kd3` int(11) DEFAULT NULL,
   `p_kd4` int(11) DEFAULT NULL,
-  `p_deskripsi` text,
+  `p_deskripsi` text DEFAULT NULL,
   `k_kd1` int(11) DEFAULT NULL,
   `k_kd2` int(11) DEFAULT NULL,
   `k_kd3` int(11) DEFAULT NULL,
   `k_kd4` int(11) DEFAULT NULL,
   `k_kd5` int(11) DEFAULT NULL,
-  `k_deskripsi` text,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `k_deskripsi` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -422,7 +427,8 @@ INSERT INTO `mulok_siswa` (`id`, `siswa_id`, `aktif_id`, `mulok_id`, `p_kd1`, `p
 (10, 8, 1, 3, 90, 0, 0, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2019-10-23 08:47:56', '2019-10-23 15:47:56'),
 (11, 8, 3, 1, 80, 0, 0, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2019-10-23 08:51:38', '2019-10-23 15:51:38'),
 (12, 22, 1, 1, 90, 70, 88, 66, 'ghd', 78, 86, 84, 77, NULL, 'GHJV', '2019-10-23 11:00:44', '2019-10-23 18:00:44'),
-(13, 21, 1, 1, 80, 0, 0, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2019-10-23 20:13:44', '2019-10-24 03:13:44');
+(13, 21, 1, 1, 80, 0, 0, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2019-10-23 20:13:44', '2019-10-24 03:13:44'),
+(14, 11, 1, 1, 100, 100, 100, 100, '100', 100, 100, 100, 100, NULL, '100', '2019-11-02 22:06:24', '2019-11-03 05:06:24');
 
 -- --------------------------------------------------------
 
@@ -655,7 +661,39 @@ INSERT INTO `saran_siswa` (`id`, `siswa_id`, `aktif_id`, `saran_id`, `deskripsi`
 (240, 22, NULL, 1, ''),
 (241, 22, NULL, 2, ''),
 (242, 22, NULL, 1, ''),
-(243, 22, NULL, 2, '');
+(243, 22, NULL, 2, ''),
+(244, 22, NULL, 1, ''),
+(245, 22, NULL, 2, ''),
+(246, 21, NULL, 1, ''),
+(247, 21, NULL, 2, ''),
+(248, 21, NULL, 1, ''),
+(249, 21, NULL, 2, ''),
+(250, 22, NULL, 1, ''),
+(251, 22, NULL, 2, ''),
+(252, 22, NULL, 1, ''),
+(253, 22, NULL, 2, ''),
+(254, 22, NULL, 1, ''),
+(255, 22, NULL, 2, ''),
+(256, 25, NULL, 1, ''),
+(257, 25, NULL, 2, ''),
+(258, 25, NULL, 1, ''),
+(259, 25, NULL, 2, ''),
+(260, 25, NULL, 1, ''),
+(261, 25, NULL, 2, ''),
+(262, 25, NULL, 1, ''),
+(263, 25, NULL, 2, ''),
+(264, 25, NULL, 1, ''),
+(265, 25, NULL, 2, ''),
+(266, 25, NULL, 1, ''),
+(267, 25, NULL, 2, ''),
+(268, 25, NULL, 1, ''),
+(269, 25, NULL, 2, ''),
+(270, 21, NULL, 1, ''),
+(271, 21, NULL, 2, ''),
+(272, 25, NULL, 1, ''),
+(273, 25, NULL, 2, ''),
+(274, 20, NULL, 1, ''),
+(275, 20, NULL, 2, '');
 
 -- --------------------------------------------------------
 
@@ -686,7 +724,7 @@ CREATE TABLE `sikap` (
   `id` int(11) NOT NULL,
   `nilai` text NOT NULL,
   `keterangan` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -711,7 +749,7 @@ CREATE TABLE `sikap_siswa` (
   `aktif_id` int(2) DEFAULT NULL,
   `sikap_id` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -741,14 +779,14 @@ CREATE TABLE `siswas` (
   `tgl_lahir` date DEFAULT NULL,
   `nis` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agama` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci,
+  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tahun_angkatan` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `username_siswa` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password_siswa` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status_aktif_siswa` tinyint(4) DEFAULT NULL,
   `profile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kelas_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -767,7 +805,8 @@ INSERT INTO `siswas` (`id`, `user_id`, `name`, `jenis_kelamin`, `tempat_lahir`, 
 (21, 30, 'Nabil', 'L', 'Pasuruan', '2009-10-13', '123545687', 'Islam', 'Pasuruan', '2018', 'nabil', '123', NULL, NULL, 5, '2019-09-23 09:26:40', '2019-09-23 09:26:40'),
 (22, 31, 'vivi', 'P', 'Pasuruan', '2005-12-08', '1235667889', 'Islam', 'Pasuruan', '2016', 'vivi1', '123', NULL, NULL, 1, '2019-09-23 09:39:25', '2019-09-23 09:39:25'),
 (23, 35, 'Susanti p', 'L', 'Surabaya', '2007-12-05', '191919', 'Islam', 'Surabaya', '2018', 'susanti', '123', NULL, NULL, 1, '2019-09-28 16:30:44', '2019-09-28 09:30:44'),
-(24, 44, 'Ahmad Raisa Yakutun Nafis', 'L', 'Pasuruan', '2019-09-11', '2465', 'Islam', 'saf', '45', NULL, '123', NULL, NULL, 1, '2019-09-28 10:14:43', '2019-09-28 10:14:43');
+(24, 44, 'Ahmad Raisa Yakutun Nafis', 'L', 'Pasuruan', '2019-09-11', '2465', 'Islam', 'saf', '45', NULL, '123', NULL, NULL, 1, '2019-09-28 10:14:43', '2019-09-28 10:14:43'),
+(25, 47, 'Rizky Bagus', 'L', 'Jepara', '2019-01-31', '00000000', 'Islam', 'Jepara Kota', '2019', NULL, '12345678', NULL, '580b585b2edbce24c47b2abd.png', 1, '2019-10-31 01:40:33', '2019-10-30 18:40:33');
 
 -- --------------------------------------------------------
 
@@ -824,7 +863,8 @@ INSERT INTO `users` (`id`, `role`, `name`, `username`, `nip`, `nis`, `email`, `p
 (43, 'guru', 'Mukhammad Avif Firmansyah, S.Pd', '', '-', '', 'avif@gmail.com', '$2y$10$AYT9zGOOLcV8whWHO8xlwOMEcyiu6sC5uMg46Th1kV9MteYnSIYOa', 'ydl4yRtvkvGK0T68khAYs8fvGMLQT18XOtDwN44tnVoQp1fJnChXcKZCsePj', '2019-09-27 23:43:29', '2019-09-27 23:43:29'),
 (44, 'siswa', 'Ahmad Raisa Yakutun Nafis', NULL, NULL, '2465', NULL, '$2y$10$KRKOlefh75pQovArh8XE2OQTPv0E4r7.XySVKllG19CgR..LO162a', '5lncdoWtEm6b3nXUC616bemXbJFCZVokKBB8kVrhuGskJjXJ0xrWrMxy1qsd', '2019-09-28 10:14:43', '2019-09-28 10:14:43'),
 (45, 'admin', 'admin', 'admin', NULL, NULL, NULL, '$2y$10$WLuF5g0YW.CnIABI.RxSsOYAftTkExsfnVi6pRG2j/L2nZLRwAeh2', '82SrBI1QGWONk0vOV1Q196aFsxeLBnQ8won2ND0QQyoTubKVlSXZI6aFNtXr', '2019-10-08 22:59:00', '2019-10-08 22:59:00'),
-(46, 'admin', 'Teguh Rijanandi', 'teguh02', NULL, NULL, 'teguh@sholat.xyz', '$2y$10$A4tHlY.BXcmePpsgXUeQ2ev8K.PrQ7f6y1BHq4gwvvJIbUfP1h7C.', 'NO2jlxhTwDIqIECLp8oE1UQQjIJ7PhtSgt8mLTTsSKix6NdEG8Y8giFvo64v', NULL, NULL);
+(46, 'admin', 'Teguh Rijanandi', 'teguh02', NULL, NULL, 'teguh@sholat.xyz', '$2y$10$A4tHlY.BXcmePpsgXUeQ2ev8K.PrQ7f6y1BHq4gwvvJIbUfP1h7C.', 'NO2jlxhTwDIqIECLp8oE1UQQjIJ7PhtSgt8mLTTsSKix6NdEG8Y8giFvo64v', NULL, NULL),
+(47, 'siswa', 'Rizky Bagus', NULL, NULL, '00000000', NULL, '$2y$10$lWEhZHehZOnNvX31kJVnN.62ssiWRaz73hlsjup6clI4s4wg2bIFe', '3IXikTZXxnrJ0dWGlYjAgkePDGzVUHhBniV7p7JLHu0uYlHvIQByAPd8WgBy', '2019-10-30 18:40:33', '2019-10-30 18:40:33');
 
 --
 -- Indexes for dumped tables
@@ -948,86 +988,104 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `aktif`
 --
 ALTER TABLE `aktif`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `ekstra`
 --
 ALTER TABLE `ekstra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `ekstra_siswa`
 --
 ALTER TABLE `ekstra_siswa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT for table `gurus`
 --
 ALTER TABLE `gurus`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `kkms`
 --
 ALTER TABLE `kkms`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `mapel`
 --
 ALTER TABLE `mapel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `mapel_siswa`
 --
 ALTER TABLE `mapel_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `mulok`
 --
 ALTER TABLE `mulok`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `mulok_siswa`
 --
 ALTER TABLE `mulok_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `saran_siswa`
 --
 ALTER TABLE `saran_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+
 --
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
   MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `sikap`
 --
 ALTER TABLE `sikap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `sikap_siswa`
 --
 ALTER TABLE `sikap_siswa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `siswas`
 --
 ALTER TABLE `siswas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
