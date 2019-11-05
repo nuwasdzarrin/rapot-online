@@ -55,7 +55,15 @@
 
 		<td><a  class="p_kd4" data-type="text" data-nilai="p_kd4" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->p_kd4}}</a></td>
        
-       <td><a  class="nilai akhir" data-type="text" data-nilai="nilai akhir" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->p_kd1/4+$mulok->pivot->p_kd2/4+$mulok->pivot->p_kd3/4+$mulok->pivot->p_kd4/4}}</a></td>
+       <td><a  class="nilai akhir" id="akhirMulok{{$mulok->id}}" data-type="text" data-nilai="nilai akhir" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai"></a>
+       	<script type="text/javascript">
+       		var total{{$mulok->id}} = {{ $mulok->pivot->p_kd1 + $mulok->pivot->p_kd2 + $mulok->pivot->p_kd3 + $mulok->pivot->p_kd4 }};
+
+       		var bagi{{$mulok->id}} = <?php if ($mulok->pivot->p_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd4 != '') {echo 1;} ?> + 0;
+
+			document.getElementById('akhirMulok{{$mulok->id}}').innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
+       	</script>
+       </td>
 
        <td><a  class="p_predikat" data-nilai="_p_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai">
 		{{ AppHelper::getPredikat(
@@ -76,7 +84,15 @@
 
 		<td><a  class="k_kd4" data-type="text" data-nilai="k_kd4" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->k_kd4}}</a></td>
        
-       <td><a  class="nilai akhir" data-type="text" data-nilai="nilai akhir" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->k_kd1/4+$mulok->pivot->k_kd2/4+$mulok->pivot->k_kd3/4+$mulok->pivot->k_kd4/4}}</a></td>
+       <td><a  class="nilai akhir" data-type="text" id="akhirsMulok{{$mulok->id}}" data-nilai="nilai akhir" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai"></a></td>
+
+       <script type="text/javascript">
+       		var total{{$mulok->id}} = {{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }};
+
+       		var bagi{{$mulok->id}} = <?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0;
+
+       		document.getElementById("akhirsMulok{{$mulok->id}}").innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
+       	</script>
 
        <td><a  class="k_predikat" data-nilai="k_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai">
 		{{ AppHelper::getPredikat(

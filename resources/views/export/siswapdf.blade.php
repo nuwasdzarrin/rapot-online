@@ -200,17 +200,19 @@
 	</tr>
 
 	@foreach($siswa->mulok as $mulok => $s)
+	<?php $mulok = $s; ?>
 	<tr>
 		<td align="center">{{ ++$i }}</td>
 		<td align="center">{{ $s->nama }}</td>
 		<td align="center">
-			{{ 
-				$s->getOriginal('pivot_p_kd1')/5 + 
-				$d->getOriginal('pivot_p_kd2')/5 + 
-				$d->getOriginal('pivot_p_kd3')/5 + 
-				$d->getOriginal('pivot_p_kd4')/5 + 
-				$d->getOriginal('pivot_p_kd5')/5 
-			}}
+			<span id="akhirMulok{{$mulok->id}}"></span>
+			<script type="text/javascript">
+       		var total{{$mulok->id}} = {{ $mulok->pivot->p_kd1 + $mulok->pivot->p_kd2 + $mulok->pivot->p_kd3 + $mulok->pivot->p_kd4 }};
+
+       		var bagi{{$mulok->id}} = <?php if ($mulok->pivot->p_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd4 != '') {echo 1;} ?> + 0;
+
+			document.getElementById('akhirMulok{{$mulok->id}}').innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
+       	</script>
 		</td>
 
 		<td align="center">
@@ -235,13 +237,15 @@
 
 		<td align="center">{{ $d->getOriginal('pivot_p_deskripsi') }}</td>
 
-		<td align="center">{{ 
-				$d->getOriginal('pivot_k_kd1')/5 + 
-				$d->getOriginal('pivot_k_kd2')/5 + 
-				$d->getOriginal('pivot_k_kd3')/5 + 
-				$d->getOriginal('pivot_k_kd4')/5 + 
-				$d->getOriginal('pivot_k_kd5')/5 
-			}}
+		<td align="center">
+			<span id="akhirsMulok{{$mulok->id}}"></span>
+			<script type="text/javascript">
+       		var total{{$mulok->id}} = {{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }};
+
+       		var bagi{{$mulok->id}} = <?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0;
+
+       		document.getElementById("akhirsMulok{{$mulok->id}}").innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
+       	</script>
 		</td>
 
 		<td align="center">
