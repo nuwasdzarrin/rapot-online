@@ -1,4 +1,4 @@
-<?php use App\aktif; $periode  = aktif::where('status', 1) -> first(); ?>
+<?php use App\aktif; $periode  = aktif::where('status', 1) -> first(); use App\kkm; $kkm = kkm::where('id', 1) -> first(); ?>
     <style type="text/css" media="print">
     @page {
       size: auto;   /* auto is the initial value */
@@ -216,23 +216,36 @@
 		</td>
 
 		<td align="center">
-			<?php if ($d->getOriginal('pivot_p_kd1') == 50 && $d->getOriginal('pivot_p_kd2') == 50 && $d->getOriginal('pivot_p_kd3') == 50 && $d->getOriginal('pivot_p_kd4') == 50 && $d->getOriginal('pivot_p_kd5') == 50 ): ?>
-			{{ AppHelper::getPredikat(
-				($d->getOriginal('pivot_p_kd1')/5 + 
-				$d->getOriginal('pivot_p_kd2')/5 + 
-				$d->getOriginal('pivot_p_kd3')/5 + 
-				$d->getOriginal('pivot_p_kd4')/5 + 
-				$d->getOriginal('pivot_p_kd5')/5) / 2)
-			}}
-			<?php else: ?>
-			{{ AppHelper::getPredikat(
-				$d->getOriginal('pivot_p_kd1')/5 + 
-				$d->getOriginal('pivot_p_kd2')/5 + 
-				$d->getOriginal('pivot_p_kd3')/5 + 
-				$d->getOriginal('pivot_p_kd4')/5 + 
-				$d->getOriginal('pivot_p_kd5')/5) 
-			}}
-			<?php endif ?>
+			<span id="hasilPPredPengetahuanZ<?php echo $mulok->id ?>"></span>
+			<script type="text/javascript">
+       		var totalPZ{{$mulok->id}} = {{ $mulok->pivot->p_kd1 + $mulok->pivot->p_kd2 + $mulok->pivot->p_kd3 + $mulok->pivot->p_kd4 }};
+
+       		var bagiPZ{{$mulok->id}} = <?php if ($mulok->pivot->p_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd4 != '') {echo 1;} ?> + 0;
+
+			var semuaPZ{{$mulok->id}} = totalPZ{{$mulok->id}} / bagiPZ{{$mulok->id}};
+			console.log(semuaPZ{{$mulok->id}});
+
+			<?php $mapel = $mulok; ?>
+
+			if (semuaPZ<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && semuaPZ<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+			 	document.getElementById('hasilPPredPengetahuanZ<?php echo $mapel->id ?>').innerHTML = "A";
+			 }
+
+			if (semuaPZ<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && semuaPZ<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuanZ<?php echo $mapel->id ?>').innerHTML = "B" ;
+			}
+															
+			if (semuaPZ<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && semuaPZ<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuanZ<?php echo $mapel->id ?>').innerHTML = "C" ;
+			}
+															
+			if (semuaPZ<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && semuaPZ<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuanZ<?php echo $mapel->id ?>').innerHTML = "D" ;
+			}
+       	</script>
 		</td>
 
 		<td align="center">{{ $d->getOriginal('pivot_p_deskripsi') }}</td>
@@ -249,13 +262,34 @@
 		</td>
 
 		<td align="center">
-			{{ AppHelper::getPredikat(
-				$d->getOriginal('pivot_k_kd1')/5 + 
-				$d->getOriginal('pivot_k_kd2')/5 + 
-				$d->getOriginal('pivot_k_kd3')/5 + 
-				$d->getOriginal('pivot_k_kd4')/5 + 
-				$d->getOriginal('pivot_k_kd5')/5) 
-			}}
+			<span id="hasilPPredPengetahuan<?php echo $mapel->id ?>"></span>
+			<script type="text/javascript">
+       		var totalK{{$mulok->id}} = {{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }};
+
+       		var bagiK{{$mulok->id}} = <?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0;
+
+       		var akhirK{{$mulok->id}} = totalK{{$mulok->id}} / bagiK{{$mulok->id}};
+       		console.log(akhirK{{$mulok->id}});
+
+       		if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+			 	document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "A";
+			 }
+
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "B" ;
+			}
+															
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "C" ;
+			}
+															
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "D" ;
+			}
+       	</script>
 		</td>
 
 		<td align="center">{{ $d->getOriginal('pivot_k_deskripsi') }}</td>

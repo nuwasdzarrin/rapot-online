@@ -65,14 +65,37 @@
        	</script>
        </td>
 
-       <td><a  class="p_predikat" data-nilai="_p_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai">
-		{{ AppHelper::getPredikat(
-			$mulok->pivot->p_kd1/4+
-			$mulok->pivot->p_kd2/4+
-			$mulok->pivot->p_kd3/4+
-			$mulok->pivot->p_kd4/4
-		) }}
-		</a></td>
+       <td><a  class="p_predikat" data-nilai="_p_predikat" data-type="text" data-pk="{{$mulok->id}}" id="hasilPPredPengetahuan{{$mulok->id}}" data-title="Input Nilai"></a>
+		<script type="text/javascript">
+       		var totalP{{$mulok->id}} = {{ $mulok->pivot->p_kd1 + $mulok->pivot->p_kd2 + $mulok->pivot->p_kd3 + $mulok->pivot->p_kd4 }};
+
+       		var bagiP{{$mulok->id}} = <?php if ($mulok->pivot->p_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->p_kd4 != '') {echo 1;} ?> + 0;
+
+			var semuaP{{$mulok->id}} = totalP{{$mulok->id}} / bagiP{{$mulok->id}};
+			console.log(semuaP{{$mulok->id}});
+
+			<?php $mapel = $mulok; ?>
+
+			if (semuaP<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && semuaP<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+			 	document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "A";
+			 }
+
+			if (semuaP<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && semuaP<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "B" ;
+			}
+															
+			if (semuaP<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && semuaP<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "C" ;
+			}
+															
+			if (semuaP<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && semuaP<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "D" ;
+			}
+       	</script>
+		</td>
 
 		<td><a  class="p_deskripsi" data-nilai="p_deskripsi" data-type="text" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->p_deskripsi}}</a></td>
 
@@ -94,14 +117,36 @@
        		document.getElementById("akhirsMulok{{$mulok->id}}").innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
        	</script>
 
-       <td><a  class="k_predikat" data-nilai="k_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai">
-		{{ AppHelper::getPredikat(
-			$mulok->pivot->k_kd1/4+
-			$mulok->pivot->k_kd2/4+
-			$mulok->pivot->k_kd3/4+
-			$mulok->pivot->k_kd4/4
-			) }}
-		</a></td>
+       <td><a  class="k_predikat" data-nilai="k_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai"></a>
+
+       	<script type="text/javascript">
+       		var totalK{{$mulok->id}} = {{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }};
+
+       		var bagiK{{$mulok->id}} = <?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0;
+
+       		var akhirK{{$mulok->id}} = totalK{{$mulok->id}} / bagiK{{$mulok->id}};
+       		console.log(akhirK{{$mulok->id}});
+
+       		if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+			 	document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "A";
+			 }
+
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "B" ;
+			}
+															
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "C" ;
+			}
+															
+			if (akhirK<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && akhirK<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+			{
+				document.getElementById('hasilPPredPengetahuan<?php echo $mapel->id ?>').innerHTML = "D" ;
+			}
+       	</script>
+       </td>
 
 		<td><a  class="k_deskripsi" data-nilai="k_deskripsi" data-type="text" data-pk="{{$mulok->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mulok->pivot->k_deskripsi}}</a></td>
 
