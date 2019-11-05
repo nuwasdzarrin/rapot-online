@@ -1,6 +1,12 @@
 <?php use App\aktif; $periode  = aktif::where('status', 1) -> first(); ?>
+    <style type="text/css" media="print">
+    @page {
+      size: auto;   /* auto is the initial value */
+      margin: 25;  /* this affects the margin in the printer settings */
+      }
+    </style>
 
-<body>
+<body onload="window.print()">
     <div class="container">
         <table>
             <caption>
@@ -8,7 +14,7 @@
             </caption>
 		</table>
 
-<table class="table ">
+<table class="table">
 
 
 
@@ -65,10 +71,32 @@
 		<td align="center">Deskripsi</td>
 	</tr>
 	@foreach($siswa->mapel as $i => $d)
+	<?php $mapel = $d; ?>
 	<tr>
 		<td align="center">{{ ++$i }}</td>
 		<td align="center">{{ $d->nama }}</td>
-		<td align="center">{{ $d->getOriginal('pivot_p_kd1')/5 + $d->getOriginal('pivot_p_kd2')/5 + $d->getOriginal('pivot_p_kd3')/5 + $d->getOriginal('pivot_p_kd4')/5 + $d->getOriginal('pivot_p_kd5')/5 }}</td>
+		<td align="center">
+			<span id="mean{{$mapel->id}}"></span>
+
+			<script>
+				var xjml{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}}; // Hasil Jumlah Semua Mapel yg ada
+
+				var xMean{{$mapel->id}} = xjml{{$mapel->id}}  /
+				(	<?php if ($mapel->pivot->p_kd1 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd2 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd3 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd4 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd5 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd6 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd7 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd8 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd9 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd10 != 0): ?>1<?php endif; ?> +
+				 0);
+						                			
+      			document.getElementById("mean{{$mapel->id}}").innerHTML = xMean{{$mapel->id}};
+           	</script>
+		</td>
 
 		<td align="center">
 			<?php if ($d->getOriginal('pivot_p_kd1') == 50 && $d->getOriginal('pivot_p_kd2') && $d->getOriginal('pivot_p_kd3') == 50 && $d->getOriginal('pivot_p_kd4') == 50 && $d->getOriginal('pivot_p_kd5') == 50): ?>
@@ -92,7 +120,30 @@
 
 		<td align="center">{{ $d->getOriginal('pivot_p_deskripsi') }}</td>
 
-		<td align="center">{{ $d->getOriginal('pivot_k_kd1')/5 + $d->getOriginal('pivot_k_kd2')/5 + $d->getOriginal('pivot_k_kd3')/5 + $d->getOriginal('pivot_k_kd4')/5 + $d->getOriginal('pivot_k_kd5')/5 }}</td>
+		<td align="center">
+			<span id="meannilaiKet{{$mapel->id}}"></span>
+
+			<script type="text/javascript">
+				var jmlnilaiKet{{$mapel->id}} = {{$mapel->pivot->k_kd1 + $mapel->pivot->k_kd2 + $mapel->pivot->k_kd3 + $mapel->pivot->k_kd4 + $mapel->pivot->k_kd5 + $mapel->pivot->k_kd6 + $mapel->pivot->k_kd7 + $mapel->pivot->k_kd8 + $mapel->pivot->k_kd9 + $mapel->pivot->k_kd10}};
+
+				var xMeanket{{$mapel->id}} = jmlnilaiKet{{$mapel->id}}  /
+				(	<?php if ($mapel->pivot->k_kd1 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd2 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd3 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd4 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd5 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd6 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd7 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd8 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd9 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd10 != 0): ?>1<?php endif; ?> +
+				 0);
+
+				document.getElementById('meannilaiKet{{$mapel->id}}').innerHTML = xMeanket{{$mapel->id}};
+
+			</script>
+		</td>
+
 		<td align="center">
 				<?php if ($d->getOriginal('pivot_k_kd1') == 50 && $d->getOriginal('pivot_k_kd2') == 50 && $d->getOriginal('pivot_k_kd3') == 50 && $d->getOriginal('pivot_k_kd4') == 50 && $d->getOriginal('pivot_k_kd5') == 50): ?>
 				{{ AppHelper::getPredikat(
@@ -277,7 +328,7 @@
 <br/>
 
 <div>
-	<div style="width: 150;float:right">
+	<div style="width: 230;float:right">
 <?php
 echo "Pasuruan, " . date("d M Y");
 ?>
@@ -285,7 +336,7 @@ echo "Pasuruan, " . date("d M Y");
 		<br/>Kepala Sekolah<br/><br/><br/>
 		<p>Supeno<br/>NIP. 196306621 198504 1 001</p>
 	</div>
-	<div style="width: 150;float:left;">
+	<div style="width: 200;float:left;">
 
 		<br/>Orang Tua / Wali<br/><br/><br/><br>
 		<table class="table" style="width: 100%">

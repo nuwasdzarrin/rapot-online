@@ -336,18 +336,31 @@ class SiswaController extends Controller
         $izin = KehadiranSiswa::where('keterangan', '=', 'izin') -> where('siswa_id', $id) ->count();
         $sakit = KehadiranSiswa::where('keterangan', '=', 'sakit')-> where('siswa_id', $id) ->count();
 
-        $pdf = PDF::loadView('export.siswapdf',[
+        // $pdf = PDF::loadView('export.siswapdf',[
+        //     'siswa' => $siswa,
+        //     'total_pengetahuan' => $total_pengetahuan,
+        //     'total_akademik' => $total_akademik,
+        //     'saran' => $saran,
+        //     'alpa' => $alpa,
+        //     'mulok' => $mulok,
+        //     'izin' => $izin,
+        //     'sakit' => $sakit
+        //     ]);
+        // $date=Date("Y-m-d H:i:s", time()+60*60*7);
+        // return $pdf->stream();
+
+        $date=Date("Y-m-d H:i:s", time()+60*60*7);
+        return view('export.siswapdf') -> with([
             'siswa' => $siswa,
             'total_pengetahuan' => $total_pengetahuan,
             'total_akademik' => $total_akademik,
             'saran' => $saran,
             'alpa' => $alpa,
+            'date => $date',
             'mulok' => $mulok,
             'izin' => $izin,
             'sakit' => $sakit
-            ]);
-        $date=Date("Y-m-d H:i:s", time()+60*60*7);
-        return $pdf->stream();
+        ]);
     }
 
     public function import_excel(Request $request)

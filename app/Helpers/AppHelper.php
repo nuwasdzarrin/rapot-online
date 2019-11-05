@@ -33,6 +33,7 @@ class AppHelper {
             //echo $na;
          }
 
+         //echo $na;
          return $predikat;
 
     }

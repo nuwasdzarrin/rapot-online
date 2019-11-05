@@ -1,7 +1,8 @@
 @extends('layout.master')
 
 @section('header')
-<?php use App\aktif; $periode = aktif::where('status', 1) -> first(); ?>
+<?php use App\aktif; use App\kkm;
+ $periode = aktif::where('status', 1) -> first(); $kkm = kkm::where('id', 1) -> first(); $kkm = kkm::where('id', 1) -> first(); ?>
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 @stop
 @section ('content')
@@ -236,10 +237,11 @@
 												<td><a class="p_kd9" data-type="text" data-nilai="p_kd9" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mapel->pivot->p_kd9}}</a></td>
 												<td><a  class="p_kd10" data-type="text" data-nilai="p_kd10" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai " type="number" data-title="Input Nilai">{{$mapel->pivot->p_kd10}}</a></td>
 
-												<td><a  class="nilai akhir" id="mean{{$mapel->id}}" data-type="text" data-nilai="nilai akhir" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai"></a>
+												<td>
+													<a  class="nilai akhir" id="mean{{$mapel->id}}" data-type="text" data-nilai="nilai akhir" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai"></a>
 
 													<script>
-						                var xjml{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}}; // Hasil Jumlah Semua Mapel yg ada
+						               					var xjml{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}}; // Hasil Jumlah Semua Mapel yg ada
 
 														var xMean{{$mapel->id}} = xjml{{$mapel->id}}  /
 														(	<?php if ($mapel->pivot->p_kd1 != 0): ?>1<?php endif; ?> + 
@@ -255,40 +257,55 @@
 														 0);
 						                					
 						                					document.getElementById("mean{{$mapel->id}}").innerHTML = xMean{{$mapel->id}};
-						              </script>
+						              				</script>
 												</td>
 
 
 
 												<td><a  class="p_predikat" data-nilai="_p_predikat" data-type="text" data-pk="{{$mapel->id}}"  data-title="Input Nilai">
-												
-												<?php if ($mapel->pivot->p_kd1 == 50 && $mapel->pivot->p_kd2 == 50 && $mapel->pivot->p_kd3 == 50 && $mapel->pivot->p_kd4 == 50 && $mapel->pivot->p_kd5 == 50 && $mapel->pivot->p_kd6 == 50 && $mapel->pivot->p_kd7 == 50 && $mapel->pivot->p_kd8 == 50 && $mapel->pivot->p_kd8 == 50 && $mapel->pivot->p_kd9 == 50 && $mapel->pivot->p_kd10 == 50): ?>
-													{{ AppHelper::getPredikat(
-														(($mapel->pivot->p_kd1 / 5) + 
-														($mapel->pivot->p_kd2 / 5) + 
-														($mapel->pivot->p_kd3 / 5) +
-													 	($mapel->pivot->p_kd4 / 5) + 
-													 	($mapel->pivot->p_kd5 / 5) + 
-													 	($mapel->pivot->p_kd6 / 5) +
-													 	($mapel->pivot->p_kd7 / 5) + 
-													 	($mapel->pivot->p_kd8 / 5) +
-													 	($mapel->pivot->p_kd9 / 5) + 
-													 	($mapel->pivot->p_kd10 / 5)) / 2
-													) }}	
-												<?php else: ?>
-													{{ AppHelper::getPredikat(
-														($mapel->pivot->p_kd1 / 5) + 
-														($mapel->pivot->p_kd2 / 5) + 
-														($mapel->pivot->p_kd3 / 5) +
-													 	($mapel->pivot->p_kd4 / 5) + 
-													 	($mapel->pivot->p_kd5 / 5) + 
-													 	($mapel->pivot->p_kd6 / 5) +
-													 	($mapel->pivot->p_kd7 / 5) + 
-													 	($mapel->pivot->p_kd8 / 5) +
-													 	($mapel->pivot->p_kd9 / 5) + 
-													 	($mapel->pivot->p_kd10 / 5)
-													) }}													
-												<?php endif ?>
+												<span id="hasilPengetahuan{{$mapel->id}}"></span>
+												<script type="text/javascript">
+													// Pengetahuan
+													var xbagijml{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}};
+
+													// Mengumpulkan pembaginya
+													var bagiPengetahuan{{$mapel->id}} = 
+															<?php if ($mapel->pivot->p_kd1 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd2 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd3 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->p_kd4 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd5 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd6 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->p_kd7 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd8 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->p_kd9 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->p_kd10 != 0): ?>1<?php endif; ?> +0
+															 ;
+
+													var predikatPengetahuan{{$mapel->id}} = xbagijml{{$mapel->id}} / bagiPengetahuan{{$mapel->id}};
+
+															 if (predikatPengetahuan<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && predikatPengetahuan<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+															 	document.getElementById('hasilPengetahuan<?php echo $mapel->id ?>').innerHTML = "A";
+															 }
+
+															 if (predikatPengetahuan<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && predikatPengetahuan<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+															{
+																document.getElementById('hasilPengetahuan<?php echo $mapel->id ?>').innerHTML = "B" ;
+															}
+															
+															if (predikatPengetahuan<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && predikatPengetahuan<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+															{
+																document.getElementById('hasilPengetahuan<?php echo $mapel->id ?>').innerHTML = "C" ;
+															}
+															
+															if (predikatPengetahuan<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && predikatPengetahuan<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+															{
+																document.getElementById('hasilPengetahuan<?php echo $mapel->id ?>').innerHTML = "D" ;
+															}
+													
+												</script>
+
+
 
 												</a></td>
 
@@ -315,41 +332,85 @@
 												<td><a class="k_kd10" data-nilai="k_kd10" data-type="text" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mapel->pivot->k_kd10}}</a></td>
 
 
-												<td><a class="nilai akhir" data-nilai="nilai akhir" data-type="text" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">{{$mapel->pivot->k_kd1/5+$mapel->pivot->k_kd2/5+$mapel->pivot->k_kd3/5+$mapel->pivot->k_kd4/5+$mapel->pivot->k_kd5/5}}</a></td>
+												<td><a class="nilai akhir" data-nilai="nilai akhir" data-type="text" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Input Nilai">
+													<span id="meannilaiKet{{$mapel->id}}"></span>
+
+													<script type="text/javascript">
+														var jmlnilaiKet{{$mapel->id}} = {{$mapel->pivot->k_kd1 + $mapel->pivot->k_kd2 + $mapel->pivot->k_kd3 + $mapel->pivot->k_kd4 + $mapel->pivot->k_kd5 + $mapel->pivot->k_kd6 + $mapel->pivot->k_kd7 + $mapel->pivot->k_kd8 + $mapel->pivot->k_kd9 + $mapel->pivot->k_kd10}};
+
+														var xMeanket{{$mapel->id}} = jmlnilaiKet{{$mapel->id}}  /
+														(	<?php if ($mapel->pivot->k_kd1 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd2 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd3 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->k_kd4 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd5 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd6 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->k_kd7 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd8 != 0): ?>1<?php endif; ?> + 
+															<?php if ($mapel->pivot->k_kd9 != 0): ?>1<?php endif; ?> +
+															<?php if ($mapel->pivot->k_kd10 != 0): ?>1<?php endif; ?> +
+														 0);
+
+														 document.getElementById('meannilaiKet{{$mapel->id}}').innerHTML = xMeanket{{$mapel->id}};
+
+													</script>
+												</a></td>
 
 
 												<td>
 													<a  class="k_predikat" data-nilai="k_predikat" data-type="text" data-pk="{{$mapel->id}}"  data-title="Input Nilai">
 														
-													<?php if ($mapel->pivot->k_kd1 == 50 && $mapel->pivot->k_kd2 == 50 && $mapel->pivot->k_kd3 == 50 && $mapel->pivot->k_kd4 == 50 && $mapel->pivot->k_kd5 == 50 && $mapel->pivot->k_kd6 == 50 && $mapel->pivot->k_kd7 == 50 && $mapel->pivot->k_kd8 == 50 && $mapel->pivot->k_kd8 == 50 && $mapel->pivot->k_kd9 == 50 && $mapel->pivot->k_kd10 == 50): ?>
-														
-													{{ AppHelper::getPredikat(
-														(($mapel->pivot->k_kd1 / 5) + 
-														($mapel->pivot->k_kd2 / 5) + 
-														($mapel->pivot->k_kd3 / 5) +
-													 	($mapel->pivot->k_kd4 / 5) + 
-													 	($mapel->pivot->k_kd5 / 5) + 
-													 	($mapel->pivot->k_kd6 / 5) +
-													 	($mapel->pivot->k_kd7 / 5) + 
-													 	($mapel->pivot->k_kd8 / 5) +
-													 	($mapel->pivot->k_kd9 / 5) + 
-													 	($mapel->pivot->k_kd10 / 5)) / 2
-													) }}	
+														<span id="hasilKeterampilan{{$mapel->id}}"></span>
+														<script type="text/javascript">
+															var xbagijmlKet{{$mapel->id}} = 
+															{{
+																$mapel->pivot->k_kd1+
+																$mapel->pivot->k_kd2+
+																$mapel->pivot->k_kd3+
+																$mapel->pivot->k_kd4+
+																$mapel->pivot->k_kd5+
+																$mapel->pivot->k_kd6+
+																$mapel->pivot->k_kd7+
+																$mapel->pivot->k_kd8+
+																$mapel->pivot->k_kd9+
+																$mapel->pivot->k_kd10
+															}};
 
-													<?php else: ?>
-													{{ AppHelper::getPredikat(
-														($mapel->pivot->k_kd1 / 5) + 
-														($mapel->pivot->k_kd2 / 5) + 
-														($mapel->pivot->k_kd3 / 5) +
-													 	($mapel->pivot->k_kd4 / 5) + 
-													 	($mapel->pivot->k_kd5 / 5) + 
-													 	($mapel->pivot->k_kd6 / 5) +
-													 	($mapel->pivot->k_kd7 / 5) + 
-													 	($mapel->pivot->k_kd8 / 5) +
-													 	($mapel->pivot->k_kd9 / 5) + 
-													 	($mapel->pivot->k_kd10 / 5)
-													) }}													
-												<?php endif ?>
+															// Kumpulkan pembagi
+															var bagiKeterampilan{{$mapel->id}} = 
+																<?php if ($mapel->pivot->k_kd1 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd2 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd3 != 0): ?>1<?php endif; ?> +
+																<?php if ($mapel->pivot->k_kd4 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd5 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd6 != 0): ?>1<?php endif; ?> +
+																<?php if ($mapel->pivot->k_kd7 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd8 != 0): ?>1<?php endif; ?> + 
+																<?php if ($mapel->pivot->k_kd9 != 0): ?>1<?php endif; ?> +
+																<?php if ($mapel->pivot->k_kd10 != 0): ?>1<?php endif; ?> + 0;
+
+															var predKet{{$mapel->id}} = xbagijmlKet{{$mapel->id}} / bagiKeterampilan{{$mapel->id}};
+
+															if (predKet<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && predKet<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+															 	document.getElementById('hasilKeterampilan<?php echo $mapel->id ?>').innerHTML = "A";
+															 }
+
+															 if (predKet<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && predKet<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+															{
+																document.getElementById('hasilKeterampilan<?php echo $mapel->id ?>').innerHTML = "B" ;
+															}
+															
+															if (predKet<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && predKet<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+															{
+																document.getElementById('hasilKeterampilan<?php echo $mapel->id ?>').innerHTML = "C" ;
+															}
+															
+															if (predKet<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && predKet<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+															{
+																document.getElementById('hasilKeterampilan<?php echo $mapel->id ?>').innerHTML = "D" ;
+															}
+															
+														</script>
 													</a>
 </td>
 
