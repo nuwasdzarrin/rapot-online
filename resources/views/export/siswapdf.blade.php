@@ -81,7 +81,7 @@
 			<script>
 				var xjml{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}}; // Hasil Jumlah Semua Mapel yg ada
 
-				var xMean{{$mapel->id}} = xjml{{$mapel->id}}  /
+				var xMean{{$mapel->id}} = (xjml{{$mapel->id}}  /
 				(	<?php if ($mapel->pivot->p_kd1 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->p_kd2 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->p_kd3 != 0): ?>1<?php endif; ?> +
@@ -92,30 +92,51 @@
 					<?php if ($mapel->pivot->p_kd8 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->p_kd9 != 0): ?>1<?php endif; ?> +
 					<?php if ($mapel->pivot->p_kd10 != 0): ?>1<?php endif; ?> +
-				 0);
+				 0));
 						                			
       			document.getElementById("mean{{$mapel->id}}").innerHTML = xMean{{$mapel->id}};
            	</script>
 		</td>
 
 		<td align="center">
-			<?php if ($d->getOriginal('pivot_p_kd1') == 50 && $d->getOriginal('pivot_p_kd2') && $d->getOriginal('pivot_p_kd3') == 50 && $d->getOriginal('pivot_p_kd4') == 50 && $d->getOriginal('pivot_p_kd5') == 50): ?>
-			{{ AppHelper::getPredikat(
-				($d->getOriginal('pivot_p_kd1')/5 + 
-				$d->getOriginal('pivot_p_kd2')/5 + 
-				$d->getOriginal('pivot_p_kd3')/5 +
-				$d->getOriginal('pivot_p_kd4')/5 + 
-				$d->getOriginal('pivot_p_kd5')/5)/2)
-			}}
-			<?php else: ?>
-			{{ AppHelper::getPredikat(
-				$d->getOriginal('pivot_p_kd1')/5 + 
-				$d->getOriginal('pivot_p_kd2')/5 + 
-				$d->getOriginal('pivot_p_kd3')/5 +
-				$d->getOriginal('pivot_p_kd4')/5 + 
-				$d->getOriginal('pivot_p_kd5')/5) 
-			}}
-			<?php endif ?>
+			<span id="predikatCC{{$mapel->id}}"></span>
+			<script>
+				var xjmlCC{{$mapel->id}} = {{$mapel->pivot->p_kd1+$mapel->pivot->p_kd2+$mapel->pivot->p_kd3+$mapel->pivot->p_kd4+$mapel->pivot->p_kd5+$mapel->pivot->p_kd6+$mapel->pivot->p_kd7+$mapel->pivot->p_kd8+$mapel->pivot->p_kd9+$mapel->pivot->p_kd10}}; // Hasil Jumlah Semua Mapel yg ada
+
+				var xMeanCC{{$mapel->id}} = (xjmlCC{{$mapel->id}}  /
+				(	<?php if ($mapel->pivot->p_kd1 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd2 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd3 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd4 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd5 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd6 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd7 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd8 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->p_kd9 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->p_kd10 != 0): ?>1<?php endif; ?> +
+				 0));
+						                			
+      			// document.getElementById("predikatCC{{$mapel->id}}").innerHTML = xMeanCC{{$mapel->id}};
+
+      			if (xMeanCC<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && xMeanCC<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+				 	document.getElementById('predikatCC<?php echo $mapel->id ?>').innerHTML = "A";
+				 }
+
+				if (xMeanCC<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && xMeanCC<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+				{
+					document.getElementById('predikatCC<?php echo $mapel->id ?>').innerHTML = "B" ;
+				}
+				
+				if (xMeanCC<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && xMeanCC<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+				{
+					document.getElementById('predikatCC<?php echo $mapel->id ?>').innerHTML = "C" ;
+				}
+				
+				if (xMeanCC<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && xMeanCC<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+				{
+					document.getElementById('predikatCC<?php echo $mapel->id ?>').innerHTML = "D" ;
+				}
+           	</script>
 		</td>
 
 		<td align="center">{{ $d->getOriginal('pivot_p_deskripsi') }}</td>
