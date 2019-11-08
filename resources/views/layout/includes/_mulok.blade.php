@@ -114,12 +114,13 @@
        		document.getElementById("akhirsMulok{{$mulok->id}}").innerHTML = total{{$mulok->id}} / bagi{{$mulok->id}};
        	</script>
 
-       <td><a  class="k_predikat" id="hasilKeterampilanS<?php echo $mulok->id ?>" data-nilai="k_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai"></a>
+       <td>	<a  class="k_predikat" id="hasilKeterampilanS<?php echo $mulok->id ?>" data-nilai="k_predikat" data-type="text" data-pk="{{$mulok->id}}"  data-title="Input Nilai"></a>
 
 		<script type="text/javascript">
-			var PengetTotalS{{$mulok->id}} = {{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }};
-			var predKetS{{$mulok->id}} = (PengetTotalS{{$mulok->id}} / <?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0);
+			var PengetTotalS{{$mulok->id}} = ({{ $mulok->pivot->k_kd1 + $mulok->pivot->k_kd2 + $mulok->pivot->k_kd3 + $mulok->pivot->k_kd4 }});
+			var predKetS{{$mulok->id}} = PengetTotalS{{$mulok->id}} / (<?php if ($mulok->pivot->k_kd1 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd2 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd3 != '') {echo 1;} ?> + <?php if ($mulok->pivot->k_kd4 != '') {echo 1;} ?> + 0);
 			
+			console.log("PengetTotalS{{$mulok->id}} : " + predKetS{{$mulok->id}} );
 			//document.getElementById('hasilPPredPengetahuan<?php echo $mulok->id ?>').innerHTML = "A";
 
 			if (predKetS<?php echo $mulok->id ?> >= <?php echo $kkm->predA2 ?> && predKetS<?php echo $mulok->id ?> <= <?php echo $kkm->predA1 ?> ) {
