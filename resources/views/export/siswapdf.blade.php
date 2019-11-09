@@ -6,7 +6,7 @@
       }
     </style>
 
-<body onload="window.print()">
+<body onload="">
     <div class="container">
         <table>
             <caption>
@@ -147,7 +147,7 @@
 			<script type="text/javascript">
 				var jmlnilaiKet{{$mapel->id}} = {{$mapel->pivot->k_kd1 + $mapel->pivot->k_kd2 + $mapel->pivot->k_kd3 + $mapel->pivot->k_kd4 + $mapel->pivot->k_kd5 + $mapel->pivot->k_kd6 + $mapel->pivot->k_kd7 + $mapel->pivot->k_kd8 + $mapel->pivot->k_kd9 + $mapel->pivot->k_kd10}};
 
-				var xMeanket{{$mapel->id}} = jmlnilaiKet{{$mapel->id}}  /
+				var xMeanket{{$mapel->id}} = (jmlnilaiKet{{$mapel->id}}  /
 				(	<?php if ($mapel->pivot->k_kd1 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->k_kd2 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->k_kd3 != 0): ?>1<?php endif; ?> +
@@ -158,7 +158,7 @@
 					<?php if ($mapel->pivot->k_kd8 != 0): ?>1<?php endif; ?> + 
 					<?php if ($mapel->pivot->k_kd9 != 0): ?>1<?php endif; ?> +
 					<?php if ($mapel->pivot->k_kd10 != 0): ?>1<?php endif; ?> +
-				 0);
+				 0));
 
 				document.getElementById('meannilaiKet{{$mapel->id}}').innerHTML = xMeanket{{$mapel->id}};
 
@@ -166,23 +166,42 @@
 		</td>
 
 		<td align="center">
-				<?php if ($d->getOriginal('pivot_k_kd1') == 50 && $d->getOriginal('pivot_k_kd2') == 50 && $d->getOriginal('pivot_k_kd3') == 50 && $d->getOriginal('pivot_k_kd4') == 50 && $d->getOriginal('pivot_k_kd5') == 50): ?>
-				{{ AppHelper::getPredikat(
-					($d->getOriginal('pivot_k_kd1')/5 + 
-					$d->getOriginal('pivot_k_kd2')/5 + 
-					$d->getOriginal('pivot_k_kd3')/5 + 
-					$d->getOriginal('pivot_k_kd4')/5 + 
-					$d->getOriginal('pivot_k_kd5')/5)/2) 
-				}}
-				<?php else: ?>
-				{{ AppHelper::getPredikat(
-					$d->getOriginal('pivot_k_kd1')/5 + 
-					$d->getOriginal('pivot_k_kd2')/5 + 
-					$d->getOriginal('pivot_k_kd3')/5 + 
-					$d->getOriginal('pivot_k_kd4')/5 + 
-					$d->getOriginal('pivot_k_kd5')/5) 
-				}}
-				<?php endif ?>
+			<span id="meannilaiKetNA{{$mapel->id}}"></span>
+				<script type="text/javascript">
+					var jmlnilaiKetNA{{$mapel->id}} = {{$mapel->pivot->k_kd1 + $mapel->pivot->k_kd2 + $mapel->pivot->k_kd3 + $mapel->pivot->k_kd4 + $mapel->pivot->k_kd5 + $mapel->pivot->k_kd6 + $mapel->pivot->k_kd7 + $mapel->pivot->k_kd8 + $mapel->pivot->k_kd9 + $mapel->pivot->k_kd10}};
+
+					var xMeanketNA{{$mapel->id}} = (jmlnilaiKetNA{{$mapel->id}}  /
+				(	<?php if ($mapel->pivot->k_kd1 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd2 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd3 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd4 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd5 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd6 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd7 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd8 != 0): ?>1<?php endif; ?> + 
+					<?php if ($mapel->pivot->k_kd9 != 0): ?>1<?php endif; ?> +
+					<?php if ($mapel->pivot->k_kd10 != 0): ?>1<?php endif; ?> +
+				 0));
+
+				if (xMeanketNA<?php echo $mapel->id ?> >= <?php echo $kkm->predA2 ?> && xMeanketNA<?php echo $mapel->id ?> <= <?php echo $kkm->predA1 ?> ) {
+				 	document.getElementById('meannilaiKetNA<?php echo $mapel->id ?>').innerHTML = "A";
+				 }
+
+				if (xMeanketNA<?php echo $mapel->id ?> >= <?php echo $kkm->predB2 ?> && xMeanketNA<?php echo $mapel->id ?> <= <?php echo $kkm->predB1 ?> ) 
+				{
+					document.getElementById('meannilaiKetNA<?php echo $mapel->id ?>').innerHTML = "B" ;
+				}
+				
+				if (xMeanketNA<?php echo $mapel->id ?> >= <?php echo $kkm->predC2?> && xMeanketNA<?php echo $mapel->id ?> <= <?php echo $kkm->predC1 ?> ) 
+				{
+					document.getElementById('meannilaiKetNA<?php echo $mapel->id ?>').innerHTML = "C" ;
+				}
+				
+				if (xMeanketNA<?php echo $mapel->id ?> >= <?php echo $kkm->predD2 ?> && xMeanketNA<?php echo $mapel->id ?> <= <?php echo $kkm->predD1 ?> ) 
+				{
+					document.getElementById('meannilaiKetNA<?php echo $mapel->id ?>').innerHTML = "D" ;
+				}
+				</script>
 		</td>
 		<td align="center">{{ $d->getOriginal('pivot_k_deskripsi') }}</td>
 	</tr>
