@@ -6,7 +6,7 @@
       }
     </style>
 
-<body onload="">
+<body onload="window.print()">
     <div class="container">
         <table>
             <caption>
