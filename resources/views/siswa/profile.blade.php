@@ -430,7 +430,10 @@
 							</div>
 
 							<h4 class="pull-left">Saran</h4>
-							<button data-toggle="modal" data-target="#TambahSaranSiswa" class="btn btn-primary btn-sm pull-right" type="button" name="button">Tambah Saran</button>
+							
+							<?php if (Auth::user()->role != 'siswa'): ?>
+								<button data-toggle="modal" data-target="#TambahSaranSiswa" class="btn btn-primary btn-sm pull-right" type="button" name="button">Tambah Saran</button>
+							<?php endif ?>
 
 							<div style="margin-top: 50px" class="profile-info ">
 								<table class="table">
