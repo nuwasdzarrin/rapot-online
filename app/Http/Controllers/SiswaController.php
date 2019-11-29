@@ -15,6 +15,8 @@ use PDF;
 use Carbon;
 use App\MulokSiswa;
 use App\aktif;
+use Auth;
+use App\mapelSiswa;
 
 
 class SiswaController extends Controller
@@ -197,7 +199,17 @@ class SiswaController extends Controller
                 'deskripsi' => ''
             ]);
         }
-        return view ('siswa.profile',['tahun_angkatan' => $tahun_angkatan, 'semester' => $semester, 'siswa' => $siswa ,'matapelajaran' => $matapelajaran,'ekstrakulikuler'=>$ekstrakulikuler, 'saran' => $saran,'muatanlokal' => $muatanlokal,'nilaisikap' => $nilaisikap]);
+
+        return view ('siswa.profile',[
+            'tahun_angkatan' => $tahun_angkatan, 
+            'semester' => $semester, 
+            'siswa' => $siswa,
+            'matapelajaran' => $matapelajaran,
+            'ekstrakulikuler'=>$ekstrakulikuler, 
+            'saran' => $saran,
+            'muatanlokal' => $muatanlokal,
+            'nilaisikap' => $nilaisikap
+        ]);
     }
     public function addnilai(request $request,$idsiswa)
     {
@@ -349,12 +361,15 @@ class SiswaController extends Controller
         // $date=Date("Y-m-d H:i:s", time()+60*60*7);
         // return $pdf->stream();
 
+        $jmlMapel = mapelSiswa::where('siswa_id', $id) ->where('aktif_id', $periode->id)->count();
+
         $date=Date("Y-m-d H:i:s", time()+60*60*7);
         return view('export.siswapdf') -> with([
             'siswa' => $siswa,
             'total_pengetahuan' => $total_pengetahuan,
             'total_akademik' => $total_akademik,
             'saran' => $saran,
+            'jmlMapel' => $jmlMapel,
             'alpa' => $alpa,
             'date => $date',
             'mulok' => $mulok,

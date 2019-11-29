@@ -2,6 +2,8 @@
 
 namespace App;
 use App\aktif;
+use Auth;
+use App\mapelSiswa;
 use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
@@ -73,11 +75,20 @@ class Siswa extends Model
             $nap[] = $mapel->pivot->p_kd5;
             $nap[] = $mapel->pivot->p_kd6;
             $nap[] = $mapel->pivot->p_kd7;
+            $nap[] = $mapel->pivot->p_kd8;
+            $nap[] = $mapel->pivot->p_kd9;
+            $nap[] = $mapel->pivot->p_kd10;
+
             $nap[] = $mapel->pivot->k_kd1;
             $nap[] = $mapel->pivot->k_kd2;
             $nap[] = $mapel->pivot->k_kd3;
             $nap[] = $mapel->pivot->k_kd4;
             $nap[] = $mapel->pivot->k_kd5;
+            $nap[] = $mapel->pivot->k_kd6;
+            $nap[] = $mapel->pivot->k_kd7;
+            $nap[] = $mapel->pivot->k_kd8;
+            $nap[] = $mapel->pivot->k_kd9;
+            $nap[] = $mapel->pivot->k_kd10;
 
         }
 

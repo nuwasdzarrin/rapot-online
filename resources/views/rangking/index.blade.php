@@ -3,6 +3,10 @@
 @section ('content')
 <?php
 use App\Siswa;
+use App\mapelSiswa;
+use App\aktif;
+
+$periode  = aktif::where('status', 1) -> first();
 
 $siswaKLS1 = Siswa::where('kelas_id', '=' , 1) -> get();
 $siswaKLS1->map(function($s){$s->rataRata = $s->rataRata();return $s;});
@@ -96,6 +100,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<th>Rangking</th>
 									<th>Nama</th>
 									<th>Jumlah</th>
+									<th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 									<th>Kelas</th>
 								</tr>
 							</thead>
@@ -108,6 +113,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<td>{{$rangking}}</td>
 									<td>{{$s->name}}</td>
 									<td>{{$s->rataRata}}</td>
+									<td>
+										<?php $dataKLS1 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS1{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS1{{$s->id}} = (
+															@foreach($dataKLS1 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}}+
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS1{{$s->id}}').innerHTML = nilaiKLS1{{$s->id}} / 2;
+										</script>
+									</td>
 									<td>{{$s->kelas_id}}</td>
 								</tr>
 								@php
@@ -127,6 +144,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<th>Rangking</th>
 									<th>Nama</th>
 									<th>Jumlah</th>
+									<th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 									<th>Kelas</th>
 								</tr>
 							</thead>
@@ -139,6 +157,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<td>{{$rangking}}</td>
 									<td>{{$s->name}}</td>
 									<td>{{$s->rataRata}}</td>
+									<td>
+										<?php $dataKLS2 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS2{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS2{{$s->id}} = (
+															@foreach($dataKLS2 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}} +
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS2{{$s->id}}').innerHTML = nilaiKLS2{{$s->id}} / 2;
+										</script>
+									</td>
 									<td>{{$s->kelas_id}}</td>
 								</tr>
 								@php
@@ -159,6 +189,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<th>Rangking</th>
 									<th>Nama</th>
 									<th>Jumlah</th>
+									<th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 									<th>Kelas</th>
 								</tr>
 							</thead>
@@ -171,6 +202,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<td>{{$rangking}}</td>
 									<td>{{$s->name}}</td>
 									<td>{{$s->rataRata}}</td>
+									<td>
+										<?php $dataKLS3 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS3{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS3{{$s->id}} = (
+															@foreach($dataKLS3 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}} +
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS3{{$s->id}}').innerHTML = nilaiKLS3{{$s->id}} / 2;
+										</script>
+									</td>
 									<td>{{$s->kelas_id}}</td>
 								</tr>
 								@php
@@ -191,6 +234,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<th>Rangking</th>
 									<th>Nama</th>
 									<th>Jumlah</th>
+									<th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 									<th>Kelas</th>
 								</tr>
 							</thead>
@@ -203,6 +247,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 									<td>{{$rangking}}</td>
 									<td>{{$s->name}}</td>
 									<td>{{$s->rataRata}}</td>
+									<td>
+										<?php $dataKLS4 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS4{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS4{{$s->id}} = (
+															@foreach($dataKLS4 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}} +
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS4{{$s->id}}').innerHTML = nilaiKLS4{{$s->id}} / 2;
+										</script>
+									</td>
 									<td>{{$s->kelas_id}}</td>
 								</tr>
 								@php
@@ -223,6 +279,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 					        <th>Rangking</th>
 					        <th>Nama</th>
 					        <th>Jumlah</th>
+					        <th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 					        <th>Kelas</th>
 					      </tr>
 					    </thead>
@@ -235,6 +292,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 					        <td>{{$rangking}}</td>
 					        <td>{{$s->name}}</td>
 					        <td>{{$s->rataRata}}</td>
+					        <td>
+					        			<?php $dataKLS5 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS5{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS5{{$s->id}} = (
+															@foreach($dataKLS5 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}} +
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS5{{$s->id}}').innerHTML = nilaiKLS5{{$s->id}} / 2;
+										</script>
+					        </td>
 					        <td>{{$s->kelas_id}}</td>
 					      </tr>
 					      @php
@@ -255,6 +324,7 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 					        <th>Rangking</th>
 					        <th>Nama</th>
 					        <th>Jumlah</th>
+					        <th> <small>Jumlah Pengetahuan Keterampilan</small> </th>
 					        <th>Kelas</th>
 					      </tr>
 					    </thead>
@@ -267,6 +337,18 @@ $siswaKLS6 = $siswaKLS6->sortByDesc('rataRata');
 					        <td>{{$rangking}}</td>
 					        <td>{{$s->name}}</td>
 					        <td>{{$s->rataRata}}</td>
+					        <td>
+					        			<?php $dataKLS6 =  mapelSiswa::where('siswa_id', $s->id) -> where('aktif_id', $periode->id) -> get(['p_kd1', 'p_kd2', 'p_kd3', 'p_kd4', 'p_kd5', 'p_kd6', 'p_kd7', 'p_kd8', 'p_kd9', 'p_kd10','k_kd1', 'k_kd2', 'k_kd3', 'k_kd4', 'k_kd5', 'k_kd6', 'k_kd7', 'k_kd8', 'k_kd9', 'k_kd10']);?>
+										<p id="nilaiKLS6{{$s->id}}"></p>
+										<script type="text/javascript">
+											var nilaiKLS6{{$s->id}} = (
+															@foreach($dataKLS6 as $k)
+																{{$k->p_kd1 + $k->p_kd2 + $k->p_kd3 + $k->p_kd4 + $k->p_kd5 + $k->p_kd6 + $k->p_kd7 + $k->p_kd8 + $k->p_kd9 + $k->p_kd10 + $k->k_kd1 + $k->k_kd2 + $k->k_kd3 + $k->k_kd4 + $k->k_kd5 + $k->k_kd6 + $k->k_kd7 + $k->k_kd8 + $k->k_kd9 + $k->k_kd10 + 0}} +
+															@endforeach
+												0);
+											document.getElementById('nilaiKLS6{{$s->id}}').innerHTML = nilaiKLS6{{$s->id}} / 2;
+										</script>
+					        </td>
 					        <td>{{$s->kelas_id}}</td>
 					      </tr>
 					      @php

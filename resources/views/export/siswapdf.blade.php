@@ -93,7 +93,8 @@
 					<?php if ($mapel->pivot->p_kd9 != 0): ?>1<?php endif; ?> +
 					<?php if ($mapel->pivot->p_kd10 != 0): ?>1<?php endif; ?> +
 				 0));
-						                			
+				
+				//console.log(xMean{{$mapel->id}});
       			document.getElementById("mean{{$mapel->id}}").innerHTML = xMean{{$mapel->id}};
            	</script>
 		</td>
@@ -209,11 +210,50 @@
 	<tr>
 		<td></td>
 		<td align="center">JUMLAH</td>
-		<td align="center">{{ $total_pengetahuan}}</td>
+		<td align="center">
+				<p id="jumlahSATU"></p>	
+			
+			<script type="text/javascript">
+					var jumlahNilaiSATU =  <?php foreach ($siswa->mapel as $mapel): ?> xMean{{$mapel->id}} + <?php endforeach ?> 0;
+					document.getElementById('jumlahSATU').innerHTML = jumlahNilaiSATU;
+			</script>
+		</td>
 		<td></td>
 		<td align="center">JUMLAH</td>
-		<td align="center">{{ $total_akademik }}</td>
-		<td colspan="2"></td>
+		<td align="center">
+				<p id="jumlahKeteDUA"></p>	
+			
+			<script type="text/javascript">
+					var jumlahNilaiKete =  <?php foreach ($siswa->mapel as $mapel): ?> xMeanketNA{{$mapel->id}} + <?php endforeach ?> 0;
+					document.getElementById('jumlahKeteDUA').innerHTML = jumlahNilaiKete;
+					console.log(jumlahNilaiKete);
+			</script>
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr align="center">
+		<td></td>
+		<td>Rata Rata</td>
+		<td>
+			<p id="rataRataNilaiKet"></p>
+			<script type="text/javascript">
+				var jmlMapelSATU = <?php echo $jmlMapel ?>;
+				document.getElementById('rataRataNilaiKet').innerHTML = (jumlahNilaiSATU / jmlMapelSATU);
+			</script>
+		</td>
+		<td></td>
+		<td>Rata Rata</td>
+		<td>
+			<p id="rataRataNilaiKeterampilan"></p>
+			<script type="text/javascript">
+				var jmlMapelSATU = <?php echo $jmlMapel ?>;
+				document.getElementById('rataRataNilaiKeterampilan').innerHTML = (jumlahNilaiKete / jmlMapelSATU);
+			</script>
+		</td>
+		<td></td>
+		<td></td>
 	</tr>
 
 </table>
